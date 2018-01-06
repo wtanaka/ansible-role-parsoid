@@ -1,0 +1,16 @@
+---
+- include: compat.yml
+
+- include: include_vars.yml
+
+- include: get_key_nodesource.yml
+
+- include: Debian.yml
+  when: ansible_os_family == 'Debian'
+
+# - include: RHEL.yml
+#   when: >
+#     ansible_distribution == 'CentOS' or
+#     ansible_distribution == 'Red Hat Enterprise Linux'
+
+- include: install_package_names.yml

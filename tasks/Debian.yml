@@ -1,0 +1,51 @@
+---
+# Needed to install gnupg
+- name: apt-get update
+  apt: update_cache=true cache_valid_time=3600
+  sudo: yes
+
+# gnupg gpg command is needed to download parsoid package key
+# apt-transport-https is needed to run apt-get update later
+- name: install gnupg and apt-transport-https
+  apt: name={{item}}
+  sudo: yes
+  with_items:
+  - gnupg
+  - apt-transport-https
+
+- name: download parsoid gpg key
+  command: gpg --keyserver pool.sks-keyservers.net --recv {{parsoid_key_fingerprint}}
+  register: parsoid_key_result
+  changed_when: "'unchanged: 1' not in parsoid_key_result.stderr"
+  until: parsoid_key_result|success
+  sudo: yes
+
+- name: write parsoid key to /root
+  command: >
+    gpg --output {{parsoid_key_local_file}} --export {{parsoid_key_fingerprint}}
+  args:
+    creates: "{{parsoid_key_local_file}}"
+  sudo: yes
+
+- name: add parsoid key to apt-key
+  apt_key: file={{parsoid_key_local_file}}
+  sudo: yes
+
+- name: add nodesource key to apt-key
+  apt_key: file=/root/68576280.gpg
+  sudo: yes
+
+- name: parsoid sources.list
+  template: src=wikimedia.list.j2 dest=/etc/apt/sources.list.d/wikimedia.list
+  register: sources_list_result
+  sudo: yes
+
+- name: nodesource sources.list
+  template: src=nodesource.list.j2 dest=/etc/apt/sources.list.d/nodesource.list
+  register: result_nodesource_list
+  sudo: yes
+
+- name: apt-get update
+  apt: update_cache=true cache_valid_time=0
+  sudo: yes
+  changed_when: False
