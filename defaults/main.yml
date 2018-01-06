@@ -1,0 +1,6 @@
+---
+parsoid_key_local_file: /root/parsoid.gpg
+parsoid_key_fingerprint: 90E9F83F22250DD7
+# https://github.com/nodesource/distributions#manual-installation
+# builds >= v7.x are NOT available for Debian Wheezy
+nodesource_repo: node_6.x
