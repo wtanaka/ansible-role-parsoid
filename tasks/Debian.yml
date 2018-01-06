@@ -14,11 +14,15 @@
   - apt-transport-https
 
 - name: download parsoid gpg key
+  sudo: yes
   command: gpg --keyserver pool.sks-keyservers.net --recv {{parsoid_key_fingerprint}}
   register: parsoid_key_result
   changed_when: "'unchanged: 1' not in parsoid_key_result.stderr"
   until: parsoid_key_result|success
-  sudo: yes
+  # Workaround https://github.com/ansible/ansible/issues/16868 and
+  # increase default retry count
+  retries: 20
+  delay: 10
 
 - name: write parsoid key to /root
   command: >

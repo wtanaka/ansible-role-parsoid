@@ -14,3 +14,8 @@
 #     ansible_distribution == 'Red Hat Enterprise Linux'
 
 - include: install_package_names.yml
+
+- template:
+    src: config.yaml.j2
+    dest: /etc/mediawiki/parsoid/config.yaml
+  sudo: true

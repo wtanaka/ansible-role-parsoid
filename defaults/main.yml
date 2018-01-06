@@ -1,6 +1,26 @@
 ---
 parsoid_key_local_file: /root/parsoid.gpg
 parsoid_key_fingerprint: 90E9F83F22250DD7
+parsoid_worker_heartbeat_timeout: 300000
+parsoid_logging_level: "info"
+parsoid_conf: {}
+parsoid_mw_apis:
+# uri is the only required parameter, the URL of your MediaWiki API
+# endpoint
+- uri: 'http://localhost/w/api.php'
+  # The "domain" is used for communication with Visual Editor and
+  # RESTBase.  It defaults to the hostname portion of the `uri`
+  # property below, but you can manually set it to an arbitrary
+  # string.
+  domain: 'localhost'
+  # To specify a proxy (or proxy headers) specific to this prefix
+  # (which overrides defaultAPIProxyURI). Alternatively, set `proxy`
+  # to `null` to override and force no proxying when a default proxy
+  # has been set.
+  #proxy:
+  #    uri: 'http://my.proxy:1234/'
+  #    headers:  # optional
+  #        'X-Forwarded-Proto': 'https'
 # https://github.com/nodesource/distributions#manual-installation
 # builds >= v7.x are NOT available for Debian Wheezy
 nodesource_repo: node_6.x
