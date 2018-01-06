@@ -16,10 +16,41 @@ and other applications.
 Example Playbook
 ----------------
 
+Simple default install
+
     - hosts: all
       roles:
         - role: wtanaka.parsoid
 
+You can configure the role in the playbook:
+
+    - hosts: servers
+      roles:
+        - role: wtanaka.parsoid
+          parsoid_conf:
+            loadWMF: true
+
+Or using variables in an appropriate `host_vars` or `group_vars` file.
+
+The full set of configuration options available are visible in
+[defaults/main.yml](defaults/main.yml)
+
+### `parsoid_mw_apis`
+
+Configures the `mwApis` configuration setting
+
+Default:
+
+```
+parsoid_mw_apis:
+- uri: 'http://localhost/w/api.php'
+  domain: 'localhost'
+```
+
+License
+-------
+
+GPLv2
 
 Author Information
 ------------------
