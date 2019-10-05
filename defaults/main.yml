@@ -1,6 +1,6 @@
 ---
 parsoid_key_local_file: /root/parsoid.gpg
-parsoid_key_fingerprint: 90E9F83F22250DD7
+parsoid_key_fingerprint: AF380A3036A03444
 parsoid_worker_heartbeat_timeout: 300000
 parsoid_logging_level: "info"
 parsoid_conf: {}
